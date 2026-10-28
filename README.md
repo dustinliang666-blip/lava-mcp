@@ -140,4 +140,6 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 
 ## License
 
+本仓库采用 [MIT License](./LICENSE)。
+
 文档与 Skill 模板以站点公开内容为准；本仓库仅作接入说明与分发入口。
