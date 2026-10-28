@@ -1,5 +1,7 @@
 # lava-mcp · 熔岩消息面热度监测
 
+[![Listed on HookMCP](https://hookmcp.com/badge.svg)](https://hookmcp.com)
+
 [熔岩（Lava）](https://lava.ai-dolphin.com/subscribe) 提供 **A 股股票和概念板块的消息面热度监测** 结构化只读数据——支持 **量化交易工具** 与 **AI Agent 股市研究** 接入，通过远程 MCP / REST 调用。
 
 > 只读 · 结构化要点 + 机构/大V ID（`agency_id`）· 新闻命中不含标题与正文
