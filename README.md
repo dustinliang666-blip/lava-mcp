@@ -25,6 +25,40 @@
 
 开通与计费见 [落地页](https://lava.ai-dolphin.com/subscribe)：开通赠 100 元代金券；约 1000 次 = 5 元。
 
+## 本地 Streamable HTTP 代理
+
+[`proxy/server.py`](./proxy/server.py) 是可运行的薄代理（Python 3.9+，仅标准库）。它不实现熔岩的查询接口，只把 MCP 的 Streamable HTTP / JSON-RPC 原样转到官方端点，并附上 `Authorization: Bearer <LAVA_API_KEY>`。个股、概念和热榜数据仍来自 `https://lava.ai-dolphin.com`。
+
+直接连接官方端点仍然是推荐方式。本地代理适合需要在本机审计转发代码，或客户端不方便单独配置远程请求头的时候。
+
+```bash
+export LAVA_API_KEY=lvk_你的Key
+python3 proxy/server.py
+```
+
+默认监听 `http://127.0.0.1:8787/mcp`（只绑定本机）。
+
+| 环境变量 | 说明 |
+| --- | --- |
+| `LAVA_API_KEY` | 熔岩 API Key。设置后，每个转发请求都带 `Authorization: Bearer <key>` |
+| `LAVA_PROXY_PORT` | 监听端口，默认 `8787` |
+| `LAVA_PROXY_HOST` | 监听地址，默认 `127.0.0.1`。监听非本机地址时还要设置 `LAVA_PROXY_ALLOW_REMOTE=1` |
+| `LAVA_MCP_UPSTREAM` | 上游地址，默认 `https://lava.ai-dolphin.com/subscribe/v1/mcp` |
+| `LAVA_PROXY_TIMEOUT` | 上游超时（秒），默认 `180`；`0` 表示不限制 |
+
+客户端把 MCP 地址填成 `http://127.0.0.1:8787/mcp`，传输选 Streamable HTTP。Key 放在启动代理的环境里即可。未设置 `LAVA_API_KEY` 时，才会原样转发客户端自己的 `Authorization` 头。
+
+```bash
+curl -sS http://127.0.0.1:8787/health
+
+curl -sS http://127.0.0.1:8787/mcp \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json, text/event-stream' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"curl","version":"0"}}}'
+```
+
+`GET /health` 只检查代理进程，不访问上游。本地测试：`python3 -m unittest proxy.test_server`。
+
 ## Skill 模板
 
 仓库内 [`SKILL.md`](./SKILL.md) 与线上官方模板对齐（含全市场热榜、加权、首提、多时间窗、加速榜、日频面板、机构覆盖度与新闻点名）。官方模板：
@@ -38,6 +72,7 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 - OpenAPI 3.0：https://lava.ai-dolphin.com/subscribe/v1/openapi.json
 - llms.txt：https://lava.ai-dolphin.com/llms.txt
 - MCP Registry：[`server.json`](./server.json)
+- 本地代理：[`proxy/server.py`](./proxy/server.py)
 - Glama：[`glama.json`](./glama.json) · 线上 `/.well-known/glama.json`
 
 ## 主要工具（MCP）
@@ -109,4 +144,4 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 
 本仓库采用 [MIT License](./LICENSE)。
 
-文档与 Skill 模板以站点公开内容为准（线上 SVN **r10407** 口径）；本仓库仅作接入说明与分发入口。
+文档与 Skill 模板以站点公开内容为准（线上 SVN **r10407** 口径）。查询结果来自 lava.ai-dolphin.com；本仓库里可运行的服务端代码是本地转发代理 [`proxy/server.py`](./proxy/server.py)。
