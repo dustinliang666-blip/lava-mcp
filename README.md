@@ -75,6 +75,61 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 - 本地代理：[`proxy/server.py`](./proxy/server.py)
 - Glama：[`glama.json`](./glama.json) · 线上 `/.well-known/glama.json`
 
+## 数据模块一览
+
+熔岩同时有站内看板和订阅 API / MCP。数据是 **A 股机构/大V 舆情的结构化只读**：概念和标的给摘要要点，机构/大V 用匿名 `agency_id`。订阅落地页是 https://lava.ai-dolphin.com/subscribe ；文档、OpenAPI、MCP 与 Skill 都在同一域名下。
+
+表中的工具名与本文以及线上 OpenAPI 一致。板块趋势和情绪面的订阅路径尚未开放。
+
+| 模块 | 站内 | 订阅 API / MCP | 说明 |
+| --- | --- | --- | --- |
+| 个股消息面热度 | 个股页 / 市场热度 | `get_stock_news_heat`、`get_stock_heat_windows`、`search_news_flow` | 提及次数、机构/大V 覆盖、摘要要点 |
+| 概念板块消息面热度 | 概念页 / 概念热榜 | `get_market_hot_concepts`、`get_concept_stock_heat`、`get_stock_concept_heat` | 概念提及排行，以及概念与个股互查 |
+| 全市场热榜 / 加速 / 首提 / 高分加权 | 市场热度 | `get_market_hot_stocks`、`get_accelerating_hot_stocks`、`get_first_mention_stocks`、`get_weighted_hot_stocks` | 多时间窗；动量字段为纯统计量 |
+| 日频热度面板 / 机构覆盖度 | 个股页 | `get_stock_heat_panel`、`get_agency_coverage` | 日频序列与覆盖计数，适合回测与导出 |
+| 新闻点名 | — | `get_news_stock_hits` | 只返回 `news_id`、媒体、命中股票；无标题、无正文 |
+| 机构/大V 评分（PIT） | 市场热度 | `get_agency_ranking`、`get_agency_pit`、`get_agency_history`、`list_agency_pit_dates` | 用 `agency_id`；分数大约 450~1500 |
+| 板块趋势 | 站内已上线：侧栏「市场热度」→「板块热度」 | 站内可用 · 订阅接口规划中 | 消息热度 Δ、资金流入流出、价格指数与成分股；口径对齐东财/同花顺 |
+| 情绪面（聚合） | 规划中 · 求准优先 | 规划中 | 对外只准备聚合统计；趋势线与订阅接口质量达标后再开放 |
+
+### 板块趋势（站内已上线 · 订阅接口规划中）
+
+左侧「市场热度」可以切到「板块热度」。默认页是剧烈变化追踪，同时看消息热度变化、资金流入流出和价格变化。点进板块后，详情给出近三个月的消息面、资金流、价格指数（有数据才画）和成分股提及。板块命名对齐东财/同花顺口径。
+
+站内已上线。订阅接口规划中，目前以站内页面为准。
+
+![板块热度 · 剧烈变化追踪](./docs/shots/board-heat.png)
+
+侧栏「市场热度 → 板块热度」：按消息热度变化、资金净流入和价格变化看板块；右侧是选中板块近三个月的消息提及、净流入和板块指数。
+
+![板块详情 · 近三个月消息、资金与成分](./docs/shots/board-detail.png)
+
+板块详情：近 1 小时 / 24 小时 / 7 日提及，近 30 日与近 24 小时的提及和机构/大V，近三个月消息、资金与指数，以及成分股提及排行。
+
+### 个股 / 概念热度（站内 + MCP）
+
+全市场热榜、热度加速、高分加权、首提、小时窗、日频面板和机构覆盖度都已经能通过上表里的 MCP / REST 工具读取。站内「市场热度」是同一套统计的预览。
+
+![全市场热榜 · 个股](./docs/shots/stock-heat.png)
+
+全市场热榜的个股视图：1 小时到 7 天窗口内，按机构/大V 提及次数和人数排序，并给出 1 日变化、3 日变化和 z20。
+
+![个股消息面详情](./docs/shots/stock-detail.png)
+
+个股页：日线与提及、多时间窗热度、近 24 小时走势、近 90 日提及面板、机构/大V 覆盖度，以及结构化要点。
+
+### 情绪面（规划中 · 求准优先）
+
+正在做机构/大V 观点的二维情绪聚合。两个轴彼此独立：多空是 `bull` / `bear` / `neutral`，情感面是 `calm` / `joy` / `fear` / `frustration` / `anger`。对外只提供聚合统计，方便量化研究和 AI Agent 接入。站内趋势线和订阅接口都在质量达标后再开放。
+
+### 订阅落地页
+
+开通、计费和能查什么，以落地页为准：https://lava.ai-dolphin.com/subscribe
+
+![订阅落地页](./docs/shots/subscribe.png)
+
+落地页列出已经开放的能力：个股/概念消息面、全市场热榜、高分加权、首提流、小时热度窗、新闻点名、机构/大V 评分，以及 API / MCP 接入。
+
 ## 主要工具（MCP）
 
 | Tool | 用途 |
@@ -138,6 +193,7 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 - 全部工具只读；输出为结构化字段与统计量，供量化与 Agent 研究接入
 - 机构/大V使用返回的 `agency_id` 指代
 - `get_news_stock_hits` 只有 `news_id`、发布时间、媒体来源与命中股票，不含标题与正文
+- 板块趋势目前只在站内可用，订阅接口规划中；情绪面仍在规划中（求准优先）。二者都还不是 MCP / REST 工具
 - 勿外推控制台路径（`/subscribe/v1/console` 为 noindex）
 
 ## License
