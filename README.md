@@ -188,14 +188,6 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 
 详见线上文档与 OpenAPI：`get_market_hot_stocks`、`get_weighted_hot_stocks`、`get_first_mention_stocks`、`get_stock_heat_windows`、`get_news_stock_hits`。
 
-## 口径说明（对外）
-
-- 全部工具只读；输出为结构化字段与统计量，供量化与 Agent 研究接入
-- 机构/大V使用返回的 `agency_id` 指代
-- `get_news_stock_hits` 只有 `news_id`、发布时间、媒体来源与命中股票，不含标题与正文
-- 板块趋势目前只在站内可用，订阅接口规划中；情绪面仍在规划中（求准优先）。二者都还不是 MCP / REST 工具
-- 勿外推控制台路径（`/subscribe/v1/console` 为 noindex）
-
 ## License
 
 本仓库采用 [MIT License](./LICENSE)。
