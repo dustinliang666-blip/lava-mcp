@@ -1,0 +1,22 @@
+{
+  "name": "lava-mcp",
+  "version": "1.1.0",
+  "description": "A-share stock and concept news-heat monitoring: structured read-only MCP/REST for quant tools and AI agent market research.",
+  "settings": [
+    {
+      "name": "Lava API Key",
+      "description": "API Key from https://lava.ai-dolphin.com/subscribe (Bearer). Free signup includes starter credit.",
+      "envVar": "LAVA_API_KEY",
+      "sensitive": true
+    }
+  ],
+  "mcpServers": {
+    "lava": {
+      "httpUrl": "https://lava.ai-dolphin.com/subscribe/v1/mcp",
+      "headers": {
+        "Authorization": "Bearer $LAVA_API_KEY"
+      }
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}
