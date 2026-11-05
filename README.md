@@ -8,11 +8,11 @@
 
 ## 新手 3 步
 
-① 开通并复制 API Key（登录熔岩 → 左侧「AI数据服务」→ API Key → 新建；首次登录通常已自动生成「默认」Key）
+① 登录熔岩（手机号 / Google）→ 左侧「AI数据服务」→「API Key」。首次进入「AI数据服务」时自动送代金券并生成「默认」Key。入口：https://lava.ai-dolphin.com/lava#/ai-data-service
 
-② 装 Skill，或在豆包办公 / WorkBuddy / 千问办公填 MCP 地址 https://lava.ai-dolphin.com/subscribe/v1/mcp
+② WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth，无需手填 Key：https://lava.ai-dolphin.com/subscribe/docs#workbuddy 。API Key 方式：确认客户端支持自定义远程 MCP 后，地址填 `https://lava.ai-dolphin.com/subscribe/v1/mcp`（Streamable HTTP，请求头 `Authorization: Bearer lvk_你的Key`）。分软件步骤：https://lava.ai-dolphin.com/subscribe/docs#ai-office
 
-③ 用中文问「某某股票最近消息面热不热」，或「最近 24 小时全市场哪些股票消息面最热」
+③ 启用连接器并查看工具列表，新建任务先只调用 `get_account` 检查是否成功（熔岩不计费），然后再查询数据。
 
 ## 远程 MCP（推荐）
 
@@ -21,7 +21,7 @@
 | 传输 | Streamable HTTP |
 | Endpoint | `https://lava.ai-dolphin.com/subscribe/v1/mcp` |
 | 鉴权 | 请求头 `Authorization: Bearer <API Key>`（或 `X-API-Key`）；亦支持 OAuth 2.1（PKCE S256 + DCR） |
-| 客户端 | 豆包办公、WorkBuddy（BUDDY）、千问办公（QwenWork）等支持自定义 HTTP MCP 的客户端 |
+| 客户端 | 支持自定义远程 MCP 的客户端。WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 与 `get_account`（无需手填 Key） |
 
 开通与计费见 [落地页](https://lava.ai-dolphin.com/subscribe)：开通赠 100 元代金券；约 1000 次 = 5 元。
 
@@ -61,9 +61,11 @@ curl -sS http://127.0.0.1:8787/mcp \
 
 ## Skill 模板
 
-仓库内 [`SKILL.md`](./SKILL.md) 与线上官方模板对齐（含全市场热榜、加权、首提、多时间窗、加速榜、日频面板、机构覆盖度与新闻点名）。官方模板：
+仓库内 [`SKILL.md`](./SKILL.md) 与线上官方模板对齐（live as of 2026-11-05：WorkBuddy 5.9.3 浏览器 OAuth、先调用 `get_account` 验证、手机号 / Google 登录）。官方模板：
 
 https://lava.ai-dolphin.com/subscribe/v1/skill
+
+安装锚点：https://lava.ai-dolphin.com/subscribe/docs#workbuddy · https://lava.ai-dolphin.com/subscribe/docs#ai-office
 
 ## 文档与机器可读规范
 
@@ -192,4 +194,4 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 
 本仓库采用 [MIT License](./LICENSE)。
 
-文档与 Skill 模板以站点公开内容为准（线上 SVN **r10407** 口径）。查询结果来自 lava.ai-dolphin.com；本仓库里可运行的服务端代码是本地转发代理 [`proxy/server.py`](./proxy/server.py)。
+文档与 Skill 模板以站点公开内容为准（live as of 2026-11-05）。查询结果来自 lava.ai-dolphin.com；本仓库里可运行的服务端代码是本地转发代理 [`proxy/server.py`](./proxy/server.py)。
