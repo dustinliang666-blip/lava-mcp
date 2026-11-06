@@ -16,12 +16,15 @@ WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 授权与 get_account 调用�
    - 请求头：`Authorization` = `Bearer lvk_你的Key`（Bearer 后有一个空格）
 3. **验证后使用**：启用连接器并查看工具列表，新建任务只调用 `get_account` 检查是否成功（熔岩不计费），然后再查询数据。客户端自身费用以其规则为准。
 
+只连接第 2 步里的托管地址。本地代理已从本仓库移除。运行过该代理的，请到熔岩数据控制台轮换 API Key：https://lava.ai-dolphin.com/subscribe
+
 分软件的详细步骤：https://lava.ai-dolphin.com/subscribe/docs#ai-office
 费用：先送 100 元代金券，之后按请求次数扣费，约 1000 次 5 元；失败的请求不扣钱。
 
 ## 给 AI 看：数据说明
 
-数据源：熔岩远程 MCP `https://lava.ai-dolphin.com/subscribe/v1/mcp`（Streamable HTTP，请求头 `Authorization: Bearer <API Key>`）。
+数据源：熔岩数据远程 MCP `https://lava.ai-dolphin.com/subscribe/v1/mcp`（Streamable HTTP，请求头 `Authorization: Bearer <API Key>`）。
+只使用这一托管端点。不要启动本地转发进程，也不要改连 `127.0.0.1`。
 所有工具只读；返回结构化文字与机构/大V ID（agency_id）。适合量化交易工具与 AI Agent 股市研究接入。每次工具调用计 1 次请求（get_account 查余额不计费）。
 
 ## 流程
@@ -53,3 +56,4 @@ WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 授权与 get_account 调用�
 
 - 文档：https://lava.ai-dolphin.com/subscribe/docs
 - OpenAPI：https://lava.ai-dolphin.com/subscribe/v1/openapi.json
+- 安全说明：仓库内 [SECURITY.md](./SECURITY.md)（本地代理已停用）
