@@ -18,6 +18,8 @@ WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 授权与 get_account 调用�
 
 只连接第 2 步里的托管地址。本地代理已从本仓库移除。运行过该代理的，请到熔岩数据控制台轮换 API Key：https://lava.ai-dolphin.com/subscribe
 
+DeepSeek Harness **0.2.2-rc.1** 使用仓库内配置包 [`plugins/deepseek-harness`](./plugins/deepseek-harness/README.md)。它只连接上面的托管地址，API Key 只从环境变量 `LAVA_API_KEY` 读取，不内置 Key，不启动本地转发，也不要改连 `127.0.0.1`。官方工具列表与 `get_account` 的成功认证仍需用户自己的测试 Key。
+
 分软件的详细步骤：https://lava.ai-dolphin.com/subscribe/docs#ai-office
 费用：先送 100 元代金券，之后按请求次数扣费，约 1000 次 5 元；失败的请求不扣钱。
 
@@ -57,3 +59,4 @@ WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 授权与 get_account 调用�
 - 文档：https://lava.ai-dolphin.com/subscribe/docs
 - OpenAPI：https://lava.ai-dolphin.com/subscribe/v1/openapi.json
 - 安全说明：仓库内 [SECURITY.md](./SECURITY.md)（本地代理已停用）
+- DeepSeek Harness 插件：[`plugins/deepseek-harness`](./plugins/deepseek-harness/README.md)（DSH 0.2.2-rc.1，只连托管端点）

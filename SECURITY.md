@@ -35,3 +35,15 @@ https://lava.ai-dolphin.com/subscribe/v1/mcp
 如果你运行过本地代理，请到熔岩数据控制台轮换 API Key：
 
 https://lava.ai-dolphin.com/subscribe
+
+## DeepSeek Harness plugin
+
+[`plugins/deepseek-harness/`](./plugins/deepseek-harness/README.md) is a configuration-only bundle for DeepSeek Harness 0.2.2-rc.1. It is another way to reach the same hosted endpoint. It does not listen, spawn a forwarder or subprocess, or embed an API key. The MCP URL is fixed to https://lava.ai-dolphin.com/subscribe/v1/mcp . The key is read at runtime from the environment variable `LAVA_API_KEY`. Do not point it at `127.0.0.1` or a local forwarder.
+
+A successful authentication check with a real test key (official tools list and `get_account`) is still pending. Details: [plugins/deepseek-harness/SECURITY.md](./plugins/deepseek-harness/SECURITY.md).
+
+## DeepSeek Harness 插件
+
+[`plugins/deepseek-harness/`](./plugins/deepseek-harness/README.md) 是 DeepSeek Harness 0.2.2-rc.1 的配置包，用来连接同一个托管端点。它不监听端口、不启动转发进程或子进程、不内置 API Key。MCP 地址固定为 https://lava.ai-dolphin.com/subscribe/v1/mcp ，Key 只在运行时从环境变量 `LAVA_API_KEY` 读取。不要把它指到 `127.0.0.1` 或本地转发。
+
+用真实测试 Key 做成功认证（官方工具列表与 `get_account`）仍未完成。说明见 [plugins/deepseek-harness/SECURITY.md](./plugins/deepseek-harness/SECURITY.md)。

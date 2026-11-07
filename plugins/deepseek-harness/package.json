@@ -1,0 +1,35 @@
+{
+  "name": "dsh-lava-data-mcp",
+  "version": "0.1.0-draft.1",
+  "description": "熔岩数据 — 金融数据量化 MCP与 AI Agent服务",
+  "license": "MIT",
+  "homepage": "https://lava.ai-dolphin.com/subscribe",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dustinliang666-blip/lava-mcp.git",
+    "directory": "plugins/deepseek-harness"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "mcp",
+    "finance",
+    "ashare",
+    "lava"
+  ],
+  "files": [
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "SECURITY.md",
+    "LICENSE",
+    "TEST-REPORT.md"
+  ],
+  "engines": {
+    "dsh": "0.2.2-rc.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
