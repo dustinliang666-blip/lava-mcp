@@ -1,0 +1,15 @@
+# DSH 0.2.2-rc.1: environment-only authentication; no credential templates in this release.
+- insert:
+    - id: mcp-lava-data
+      name: '@deepseek-ai/dsh-mcp-client'
+      disabled: !!js '!process.env.LAVA_API_KEY'
+      config:
+        serverName: lava
+        transport: streamable-http
+        url: https://lava.ai-dolphin.com/subscribe/v1/mcp
+        headers:
+          Authorization: !!js '`Bearer ${process.env.LAVA_API_KEY}`'
+        toolCallTimeoutMs: 60000
+        failOnStartupError: false
+        reconnect:
+          enabled: false

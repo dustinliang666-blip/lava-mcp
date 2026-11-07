@@ -21,7 +21,7 @@
 | 传输 | Streamable HTTP |
 | Endpoint | `https://lava.ai-dolphin.com/subscribe/v1/mcp` |
 | 鉴权 | 请求头 `Authorization: Bearer <API Key>`（或 `X-API-Key`）；亦支持 OAuth 2.1（PKCE S256 + DCR） |
-| 客户端 | 支持自定义远程 MCP 的客户端。WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 与 `get_account`（无需手填 Key） |
+| 客户端 | 支持自定义远程 MCP 的客户端。WorkBuddy 国内版 5.9.3 已实测浏览器 OAuth 与 `get_account`（无需手填 Key）。DeepSeek Harness 0.2.2-rc.1 使用 [配置包](./plugins/deepseek-harness/README.md)（只连托管端点，Key 来自 `LAVA_API_KEY`） |
 
 开通与计费见 [落地页](https://lava.ai-dolphin.com/subscribe)：开通赠 100 元代金券；约 1000 次 = 5 元。
 
@@ -37,6 +37,12 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 
 安装锚点：https://lava.ai-dolphin.com/subscribe/docs#workbuddy · https://lava.ai-dolphin.com/subscribe/docs#ai-office
 
+## DeepSeek Harness 插件 / DeepSeek Harness bundle
+
+[熔岩数据 DeepSeek Harness 插件](./plugins/deepseek-harness/README.md)：金融数据量化 MCP与 AI Agent服务。配置型 bundle 通过官方 Streamable HTTP 端点提供 A 股消息面热度、个股/概念热榜、历史面板与机构评分。用户需在 https://lava.ai-dolphin.com/subscribe 获取并自行配置 `LAVA_API_KEY`；不内置 Key，不启动本地代理。安装步骤、已验证版本与验收限制见插件文档；数据查询可能扣费。不含交易执行，不构成投资建议。尚未提交插件市场。
+
+[Lava Data for DeepSeek Harness](./plugins/deepseek-harness/README.en.md) is a configuration-only bundle for A-share news heat, stock/concept rankings, historical panels and agency scores through the official hosted Streamable HTTP MCP endpoint. Supply your own `LAVA_API_KEY` from https://lava.ai-dolphin.com/subscribe . No embedded keys or local proxy. See the bundle documentation for setup, the tested host version and validation limits. Data queries may incur charges. No trading execution or investment advice. Marketplace submission is pending separate approval.
+
 ## 文档与机器可读规范
 
 - 产品落地页：https://lava.ai-dolphin.com/subscribe
@@ -45,6 +51,7 @@ https://lava.ai-dolphin.com/subscribe/v1/skill
 - llms.txt：https://lava.ai-dolphin.com/llms.txt
 - MCP Registry：[`server.json`](./server.json)
 - 安全说明：[SECURITY.md](./SECURITY.md)
+- DeepSeek Harness 0.2.2-rc.1：[`plugins/deepseek-harness`](./plugins/deepseek-harness/README.md)（只连托管端点；成功认证仍待用户测试 Key）
 - Glama：[`glama.json`](./glama.json) · 线上 `/.well-known/glama.json`
 
 ## 数据模块一览
